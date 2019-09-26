@@ -1,57 +1,54 @@
 package main
 
-import(
+import (
 	"bufio"
-	"os"
 	"fmt"
-	"strings"
-	"strconv"
+	"os"
 	"sorter/gosort"
+	"strconv"
+	"strings"
 	"sync"
 )
 
 // a function that can read a line from stdin
-func readLine() ( l string, e error) {
+func readLine() (l string, e error) {
 	reader := bufio.NewReader(os.Stdin)
 	return reader.ReadString('\n')
 }
 
 func main() {
 
-
 	var wg sync.WaitGroup
 
 	fmt.Print("Enter a sequence of integers separated by space for sorting\n")
-	in , e := readLine()
+	in, e := readLine()
 	if e != nil {
-		fmt.Printf("An Error has occured %v\n",e)
+		fmt.Printf("An Error has occured %v\n", e)
 		os.Exit(1)
-	}	
+	}
 
 	s := strings.Fields(in)
 	var unsorted []int
 	var n int
 
-	for i := 0; i < len(s) ; i++ {
+	for i := 0; i < len(s); i++ {
 		n, e = strconv.Atoi(s[i])
 		if e != nil {
-			fmt.Printf("An Error has occured %v\n",e)
-			os.Exit(1)			
+			fmt.Printf("An Error has occured %v\n", e)
+			os.Exit(1)
 		}
 		unsorted = append(unsorted, n)
-	}	
+	}
 
-
-	work := gosortint.NSlice(4,unsorted)
+	work := gosortint.NSlice(4, unsorted)
 	for _, w := range work {
 
 		wg.Add(1)
-		go gosortint.Sort(w,&wg)
+		go gosortint.Sort(w, &wg)
 
 	}
 	wg.Wait()
-	fmt.Printf("%v\n",work)
-	gosortint.Merge(work)
-
+	fmt.Printf("Buckets : %v\n", work)
+	fmt.Printf("Sorted Result : %v\n",gosortint.Merge(work))
 
 }
