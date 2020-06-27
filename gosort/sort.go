@@ -15,7 +15,7 @@ func NSlice(n int, dat []int) (slices [][]int) {
 		n = dl
 	}
 
-	if (s - float32(int(s))) >= 0.5 {
+	if (s - float32(sl)) >= 0.5 {
 		sl++ // slice length
 	}
 
